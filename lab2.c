@@ -49,10 +49,10 @@ int minValue(int minData[], int minSize);
 int enterMeasurementData(int eData[], int eSize)
 {
         int command = 0;
-        printf("\nEnter measurements: ");
         do {
+                printf("\nEnter a measurement (0 to quit): ");
                 scanf("%d", &command);
-                if((command != 0) && (eSize < MAX_SIZE)) {
+                if((command != 0)  && (eSize < MAX_SIZE)) {
                         eData[eSize] = command;
                         eSize++;
                 }
@@ -162,9 +162,9 @@ int measurementHandler(char mCommand, int Data[], int cData[], int enteredSize)
 
 int main(int argc, char **argv) 
 {
-        int measurementArray[MAX_SIZE] = {3, 4};
+        int measurementArray[MAX_SIZE] = {};
         int computingPlaceholder[MAX_SIZE] = {};
-        int currentSize = 2;
+        int currentSize = 0;
 
         char cmd = '0';
 	    dbgEnter("main");
@@ -178,7 +178,7 @@ int main(int argc, char **argv)
                 }
 
                 scanf("%c", &cmd);
-                if (cmd && (cmd != '\n')) {
+                if (cmd && (cmd != '\n') && (cmd != ' ')) {
                         currentSize = measurementHandler(cmd, measurementArray, computingPlaceholder, currentSize);
 
                 }
