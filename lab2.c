@@ -45,22 +45,27 @@ int minValue(int minData[], int minSize);
 
 
 
-
+/* This is code for entering data. A zero cannot be entered.
+ * Instead a zero will make the input process end.
+ */
 int enterMeasurementData(int eData[], int eSize)
 {
         int command = 0;
         do {
                 printf("\nEnter a measurement (0 to quit): ");
                 scanf("%d", &command);
+
                 if((command != 0)  && (eSize < MAX_SIZE)) {
                         eData[eSize] = command;
                         eSize++;
                 }
 
         } while ((command != 0) && (eSize < MAX_SIZE));
+
         if (eSize >= MAX_SIZE) {
                 printf("\nToo many measurement variables.\n");
         }
+
         return eSize;
 }
 
