@@ -75,12 +75,17 @@ int resetMeasurementData(int rData[], int rcData[], int rSize)
 
 float averageValue(int aData[], int aSize)
 {
+
         float avgValue = 0;
-        int sum = 0;
-        for (int i = 0; i < aSize; i++) {
-                sum = sum + aData[i];
+        if(aSize > 0) {
+
+                int sum = 0;
+                for (int i = 0; i < aSize; i++) {
+                        sum = sum + aData[i];
+                }
+                avgValue = (float)(sum / aSize);
         }
-        avgValue = (float)(sum / aSize);
+
         return avgValue;
 }
 
@@ -165,6 +170,7 @@ int main(int argc, char **argv)
         int measurementArray[MAX_SIZE] = {};
         int computingPlaceholder[MAX_SIZE] = {};
         int currentSize = 0;
+        int streamCheck = 0;
 
         char cmd = '0';
 	    dbgEnter("main");
@@ -173,20 +179,21 @@ int main(int argc, char **argv)
         printf("c = Compute. r = reset all measurements. q = quit.\n");
 	    
         do {
-                if(cmd) {
+                //if(cmd) {
 	                    printf("\nVECRQ: ");
-                }
+                //}
 
                 scanf("%c", &cmd);
                 if (cmd && (cmd != '\n') && (cmd != ' ')) {
                         currentSize = measurementHandler(cmd, measurementArray, computingPlaceholder, currentSize);
 
                 }
-                if (cmd == '\n') {
+                /*if (cmd == '\n') {
                         cmd = '\0';
-                }
+                }*/
+                while((streamCheck = getchar()) != '\n' && (streamCheck != EOF));
 
-        } while ((cmd != 'q') && (cmd != 'Q'));
+        } while ((cmd != 'q'));
 	    
 	    printf("...Lab #2 done, bye!\n");
         dbgExit("Exiting main.");
