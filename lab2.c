@@ -1,4 +1,4 @@
-/* Lab 2. KTH Elektroteknik. */
+/* Lab 2. KTH Elektroteknik. The debug functions remain intact. */
 
 #include <stdio.h>
 #define DBGLEVEL 2
@@ -29,9 +29,14 @@ void dbgInspect(char *msg, char *id, int value)
 }
 //*** DBGP END ***************************************************
 
+
+
+
 //*** Other packages *********************************************
 
 
+
+/*********** Function declarations for the program. *********************************************/
 
 int measurementHandler(char mCommand, int msrData[], int cmpData[], int enteredSize);
 void viewMeasureData(int vData[], int vSize);
@@ -39,9 +44,17 @@ int enterMeasurementData(int eData[], int eSize);
 void computeMeasurementData(int givenData[], int computeData[], int cSize);
 int resetMeasurementData(int rData[], int rcData[], int rSize);
 float averageValue(int aData[], int aSize);
-float normalValue(int nData[], int nSize);
+float printnormalValue(int nData[], int compData[], int nSize);
 int maxValue(int maxData[], int maxSize);
 int minValue(int minData[], int minSize);
+
+/************ End function declarations ***********************************************************/
+
+
+
+
+
+/*************************************** Function definitions ***************************************/
 
 
 
@@ -69,6 +82,7 @@ int enterMeasurementData(int eData[], int eSize)
         return eSize;
 }
 
+/* Resets both Arrays to zero. */
 int resetMeasurementData(int rData[], int rcData[], int rSize)
 {
         for(int i = 0; i < rSize;i++) {
@@ -78,23 +92,28 @@ int resetMeasurementData(int rData[], int rcData[], int rSize)
         return 0;
 }
 
+/* Gets the average value from the measurent array. */
 float averageValue(int aData[], int aSize)
 {
 
         float avgValue = 0;
+        /* The size cannot be zero. */
         if(aSize > 0) {
 
                 int sum = 0;
                 for (int i = 0; i < aSize; i++) {
                         sum = sum + aData[i];
                 }
-                avgValue = (float)(sum / aSize);
+                avgValue = (float)((float)sum / (float)aSize);
         }
 
         return avgValue;
 }
 
-void getNormalValue(int nData[], int compData[], int nSize)
+/* Prints the normal value from an array which got the original data 
+ * from another array. 
+*/
+void printNormalValue(int nData[], int compData[], int nSize)
 {
         int average = averageValue(nData, nSize);
         printf("\n[");
@@ -106,6 +125,7 @@ void getNormalValue(int nData[], int compData[], int nSize)
 
 }
 
+/* Returns the max value from an array. */
 int maxData(int maxData[], int maxSize)
 {
         int currentMaxValue = maxData[0];
@@ -116,7 +136,7 @@ int maxData(int maxData[], int maxSize)
         }
         return currentMaxValue;
 }
-
+/* Returns the min value from an array. */
 int minData(int minData[], int minSize)
 {
         int currentMinValue = minData[0];
@@ -127,7 +147,9 @@ int minData(int minData[], int minSize)
         }
         return currentMinValue;
 }
-
+/* It is the view function which prints data from the array. 
+ * It prints the measurement data from user input. 
+*/
 void viewMeasureData(int vData[], int vSize)
 {
         printf("[");
@@ -137,15 +159,22 @@ void viewMeasureData(int vData[], int vSize)
         printf("]\n");
 }
 
+/* It is a function which gets modified data from other function and 
+ * presents them here.
+ */
 void computeMeasurementData(int givenData[], int computeData[], int cSize)
 {
         printf("\nMax Value: %d\n", maxData(givenData, cSize)); 
         printf("\nMin Value: %d\n", minData(givenData, cSize)); 
         printf("\nAverage Value: %.2f\n", averageValue(givenData, cSize)); 
         printf("\nNormal Value: "); 
-        getNormalValue(givenData, computeData, cSize); 
+        printNormalValue(givenData, computeData, cSize); 
 }
 
+/* This is the first function except form main that is entered. 
+ * It passes the value entered from a user in the main function
+ * to other functions.
+*/
 int measurementHandler(char mCommand, int Data[], int cData[], int enteredSize)
 {
         switch (mCommand) {
@@ -170,6 +199,10 @@ int measurementHandler(char mCommand, int Data[], int cData[], int enteredSize)
 
 }
 
+/************************************** End function definitions ****************************************/
+
+
+/************************************** Main function ***************************************************/
 int main(int argc, char **argv) 
 {
         int measurementArray[MAX_SIZE] = {};
@@ -178,29 +211,34 @@ int main(int argc, char **argv)
         int streamCheck = 0;
 
         char cmd = '0';
-	    dbgEnter("main");
-	    dbgInspect("main", "dbg level", DBGLEVEL);
+	    //commented code: dbgEnter("main");
+	    //commented code: dbgInspect("main", "dbg level", DBGLEVEL);
+
 	    printf("Starting Lab #2. v = view, e = enter values or enter a value\n");
         printf("c = Compute. r = reset all measurements. q = quit.\n");
 	    
         do {
-                //if(cmd) {
+                //commented code; if(cmd) {
 	                    printf("\nVECRQ: ");
-                //}
+                //commented code: }
 
                 scanf("%c", &cmd);
-                if (cmd && (cmd != '\n') && (cmd != ' ')) {
+                //commented code: if (cmd && (cmd != '\n') && (cmd != ' ')) {
+
+                        /* User input will be processed in measurementHandler. */
                         currentSize = measurementHandler(cmd, measurementArray, computingPlaceholder, currentSize);
 
-                }
-                /*if (cmd == '\n') {
+                //commented code: }
+                /*commented code: if (cmd == '\n') {
                         cmd = '\0';
                 }*/
+
+                /* The stdin can be cleared with the getchar() function. */
                 while((streamCheck = getchar()) != '\n' && (streamCheck != EOF));
 
         } while ((cmd != 'q'));
 	    
 	    printf("...Lab #2 done, bye!\n");
-        dbgExit("Exiting main.");
+        //commented code: dbgExit("Exiting main.");
 	    return 0;
 }
