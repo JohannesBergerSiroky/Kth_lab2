@@ -104,7 +104,7 @@ float averageValue(int aData[], int aSize)
                 for (int i = 0; i < aSize; i++) {
                         sum = sum + aData[i];
                 }
-                avgValue = (float)((float)sum / (float)aSize);
+                avgValue = ((float)sum / (float)aSize);
         }
 
         return avgValue;
